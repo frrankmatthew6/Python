@@ -1,0 +1,33 @@
+class RobotVacuumCleaner:
+    def __init__(self, battery_level=100):
+        self.battery_level = battery_level
+        self.is_cleaning = False
+
+    def start_cleaning(self):
+        if self.battery_level > 0:
+            self.is_cleaning = True
+            print("Robot vacuum cleaner started cleaning.")
+        else:
+            print("Low battery. Please charge the robot vacuum cleaner.")
+
+    def stop_cleaning(self):
+        self.is_cleaning = False
+        print("Robot vacuum cleaner stopped cleaning.")
+
+    def charge(self):
+        self.battery_level = 100
+        print("Robot vacuum cleaner is charging. Battery level: 100%")
+
+    def check_battery_level(self):
+        print(f"Battery level: {self.battery_level}%")
+
+# Example Usage
+if __name__ == "__main__":
+    my_robot_vacuum = RobotVacuumCleaner()
+
+    my_robot_vacuum.check_battery_level()
+    my_robot_vacuum.start_cleaning()
+    my_robot_vacuum.check_battery_level()
+    my_robot_vacuum.stop_cleaning()
+    my_robot_vacuum.charge()
+    my_robot_vacuum.check_battery_level()
