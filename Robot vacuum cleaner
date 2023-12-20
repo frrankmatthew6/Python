@@ -1,14 +1,16 @@
+import random
+
 class RobotVacuumCleaner:
     def __init__(self, battery_level=100):
         self.battery_level = battery_level
         self.is_cleaning = False
+        self.position = (0, 0)
 
     def start_cleaning(self):
         if self.battery_level > 0:
             self.is_cleaning = True
             print("Robot vacuum cleaner started cleaning.")
-        else:
-            print("Low battery. Please charge the robot vacuum cleaner.")
+            self.clean()
 
     def stop_cleaning(self):
         self.is_cleaning = False
@@ -21,6 +23,31 @@ class RobotVacuumCleaner:
     def check_battery_level(self):
         print(f"Battery level: {self.battery_level}%")
 
+    def clean(self):
+        while self.is_cleaning:
+            self.move()
+            self.battery_level -= 1
+            print("Cleaning in progress. Battery level:", self.battery_level)
+
+            if self.battery_level <= 0:
+                print("Low battery. Returning to the charging station.")
+                self.return_to_charging_station()
+                break
+
+    def move(self):
+        # Simulate movement to a random nearby location
+        new_x = self.position[0] + random.choice([-1, 0, 1])
+        new_y = self.position[1] + random.choice([-1, 0, 1])
+        self.position = (new_x, new_y)
+        print("Moved to position:", self.position)
+
+    def return_to_charging_station(self):
+        print("Returning to the charging station.")
+        # Simulate movement back to the charging station
+        self.position = (0, 0)
+        print("Arrived at the charging station.")
+        self.charge()
+
 # Example Usage
 if __name__ == "__main__":
     my_robot_vacuum = RobotVacuumCleaner()
@@ -29,5 +56,4 @@ if __name__ == "__main__":
     my_robot_vacuum.start_cleaning()
     my_robot_vacuum.check_battery_level()
     my_robot_vacuum.stop_cleaning()
-    my_robot_vacuum.charge()
-    my_robot_vacuum.check_battery_level()
+
