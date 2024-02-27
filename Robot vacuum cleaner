@@ -16,6 +16,21 @@ class RobotVacuumCleaner:
         self.is_cleaning = False
         print("Robot vacuum cleaner stopped cleaning.")
 
+    def pause_cleaning(self):
+        if self.is_cleaning:
+            self.is_cleaning = False
+            print("Cleaning paused.")
+        else:
+            print("The robot vacuum cleaner is not currently cleaning.")
+
+    def resume_cleaning(self):
+        if not self.is_cleaning:
+            self.is_cleaning = True
+            print("Cleaning resumed.")
+            self.clean()
+        else:
+            print("The robot vacuum cleaner is already cleaning.")
+
     def charge(self):
         self.battery_level = 100
         print("Robot vacuum cleaner is charging. Battery level: 100%")
@@ -34,6 +49,10 @@ class RobotVacuumCleaner:
                 self.return_to_charging_station()
                 break
 
+            if self.obstacle_detection():
+                print("Obstacle detected. Pausing cleaning.")
+                self.pause_cleaning()
+
     def move(self):
         # Simulate movement to a random nearby location
         new_x = self.position[0] + random.choice([-1, 0, 1])
@@ -48,6 +67,10 @@ class RobotVacuumCleaner:
         print("Arrived at the charging station.")
         self.charge()
 
+    def obstacle_detection(self):
+        # Simulate obstacle detection (50% chance of detecting an obstacle)
+        return random.random() < 0.5
+
 # Example Usage
 if __name__ == "__main__":
     my_robot_vacuum = RobotVacuumCleaner()
@@ -55,5 +78,6 @@ if __name__ == "__main__":
     my_robot_vacuum.check_battery_level()
     my_robot_vacuum.start_cleaning()
     my_robot_vacuum.check_battery_level()
+    my_robot_vacuum.pause_cleaning()
+    my_robot_vacuum.resume_cleaning()
     my_robot_vacuum.stop_cleaning()
-
