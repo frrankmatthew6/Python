@@ -1,10 +1,12 @@
 import random
+from datetime import datetime
 
 class RobotVacuumCleaner:
     def __init__(self, battery_level=100):
         self.battery_level = battery_level
         self.is_cleaning = False
         self.position = (0, 0)
+        self.cleaning_log = []
 
     def start_cleaning(self):
         if self.battery_level > 0:
@@ -53,6 +55,12 @@ class RobotVacuumCleaner:
                 print("Obstacle detected. Pausing cleaning.")
                 self.pause_cleaning()
 
+            if self.detect_edge():
+                print("Reached edge. Pausing cleaning.")
+                self.pause_cleaning()
+
+            self.cleaning_log.append((datetime.now(), self.position))
+
     def move(self):
         # Simulate movement to a random nearby location
         new_x = self.position[0] + random.choice([-1, 0, 1])
@@ -68,8 +76,15 @@ class RobotVacuumCleaner:
         self.charge()
 
     def obstacle_detection(self):
-        # Simulate obstacle detection (50% chance of detecting an obstacle)
-        return random.random() < 0.5
+        # Simulate obstacle detection (30% chance of detecting an obstacle)
+        return random.random() < 0.3
+
+    def detect_edge(self):
+        # Simulate edge detection (20% chance of detecting an edge)
+        return random.random() < 0.2
+
+    def get_cleaning_log(self):
+        return self.cleaning_log
 
 # Example Usage
 if __name__ == "__main__":
@@ -81,3 +96,6 @@ if __name__ == "__main__":
     my_robot_vacuum.pause_cleaning()
     my_robot_vacuum.resume_cleaning()
     my_robot_vacuum.stop_cleaning()
+
+    print("Cleaning log:")
+    print(my_robot_vacuum.get_cleaning_log())
